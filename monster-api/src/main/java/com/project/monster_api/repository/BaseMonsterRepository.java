@@ -1,5 +1,6 @@
 package com.project.monster_api.repository;
 
+import com.project.monster_api.model.BaseMonster;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

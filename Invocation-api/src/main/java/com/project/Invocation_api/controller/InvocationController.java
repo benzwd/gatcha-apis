@@ -1,6 +1,7 @@
 package com.project.Invocation_api.controller;
 
-import com.example.gatchagame.service.InvocationService;
+import com.project.Invocation_api.service.InvocationService;
+import com.project.monster_api.model.Monster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

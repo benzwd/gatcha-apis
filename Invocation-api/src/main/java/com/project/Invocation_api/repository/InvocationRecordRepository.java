@@ -1,6 +1,6 @@
 package com.project.Invocation_api.repository;
 
-import com.example.gatchagame.model.InvocationRecord;
+import com.project.Invocation_api.model.InvocationRecord;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,5 +1,7 @@
 package com.project.player_api.controller;
 
+import com.project.player_api.model.Player;
+import com.project.player_api.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

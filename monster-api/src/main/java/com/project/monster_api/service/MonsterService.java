@@ -1,7 +1,10 @@
 package com.project.monster_api.service;
 
-import com.example.gatchagame.repository.BaseMonsterRepository;
-import com.example.gatchagame.repository.MonsterRepository;
+import com.project.monster_api.model.BaseMonster;
+import com.project.monster_api.model.Monster;
+import com.project.monster_api.model.Skill;
+import com.project.monster_api.repository.BaseMonsterRepository;
+import com.project.monster_api.repository.MonsterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

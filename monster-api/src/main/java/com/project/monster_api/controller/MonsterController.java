@@ -1,5 +1,7 @@
 package com.project.monster_api.controller;
 
+import com.project.monster_api.model.Monster;
+import com.project.monster_api.service.MonsterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,5 +40,13 @@ public class MonsterController {
     public ResponseEntity<Monster> addExperience(@PathVariable String monsterId,
                                                  @RequestParam double xp) {
         return ResponseEntity.ok(monsterService.addExperience(monsterId, xp));
+    }
+
+    @PostMapping("/save")
+    public ResponseEntity<Monster> saveMonster(@RequestBody Monster monster) {
+        // Appel du service pour enregistrer le monstre
+        Monster savedMonster = monsterService.saveMonster(monster);
+        // Retourne le monstre enregistré avec un statut 200 OK (ou 201 Created)
+        return ResponseEntity.ok(savedMonster);
     }
 }
