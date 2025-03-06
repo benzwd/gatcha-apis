@@ -1,0 +1,14 @@
+package com.project.monster_api.repository;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+/**
+ * Repository pour les BaseMonster.
+ */
+@Repository
+public interface BaseMonsterRepository extends MongoRepository<BaseMonster, String> {
+    List<BaseMonster> findAll();
+}
