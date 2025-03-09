@@ -24,12 +24,13 @@ public class AuthController {
     @PostMapping
     public ResponseEntity<AuthResponse> authenticate(@RequestBody AuthRequest authRequest) {
         String token = authService.authenticate(authRequest.getUsername(), authRequest.getPassword());
-        return ResponseEntity.ok(new AuthResponse(token));
+        AuthResponse authResponse = new AuthResponse(token);
+        return ResponseEntity.ok(authResponse);
     }
 
     @GetMapping
     public String test(){
-        return ResponseEntity.ok().toString();
+        return "OK";
     }
 
     @PostMapping("/addUser")
