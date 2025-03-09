@@ -2,9 +2,11 @@ package com.project.auth_api.controller;
 
 import com.project.auth_api.dto.AuthRequest;
 import com.project.auth_api.dto.AuthResponse;
+import com.project.auth_api.exception.UnauthorizedException;
 import com.project.auth_api.model.User;
 import com.project.auth_api.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,9 +30,14 @@ public class AuthController {
         return ResponseEntity.ok(authResponse);
     }
 
-    @GetMapping
-    public String test(){
-        return "OK";
+    @PostMapping("/validate-token")
+    public ResponseEntity<String> validateToken(@RequestBody String token) {
+        try {
+            String username = authService.validateToken(token);
+            return ResponseEntity.ok(username);
+        } catch (UnauthorizedException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token invalide.");
+        }
     }
 
     @PostMapping("/addUser")

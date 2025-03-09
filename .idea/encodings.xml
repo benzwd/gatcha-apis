@@ -3,6 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/Invocation-api/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/auth-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/combat-api/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/monster-api/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/player-api/src/main/java" charset="UTF-8" />
   </component>
