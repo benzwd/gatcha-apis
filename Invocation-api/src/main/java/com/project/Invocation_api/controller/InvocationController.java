@@ -1,7 +1,7 @@
 package com.project.Invocation_api.controller;
 
+import com.project.Invocation_api.dto.MonsterDTO;
 import com.project.Invocation_api.service.InvocationService;
-import com.project.monster_api.model.Monster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +23,8 @@ public class InvocationController {
      * @return monstre invoqué.
      */
     @PostMapping
-    public ResponseEntity<Monster> invokeMonster(@RequestAttribute("username") String username) {
-        Monster monster = invocationService.invokeMonster(username);
+    public ResponseEntity<MonsterDTO> invokeMonster(@RequestAttribute("username") String username) {
+        MonsterDTO monster = invocationService.invokeMonster(username);
         return ResponseEntity.ok(monster);
     }
 }

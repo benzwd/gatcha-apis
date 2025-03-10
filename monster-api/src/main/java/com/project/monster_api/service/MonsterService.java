@@ -1,5 +1,4 @@
 package com.project.monster_api.service;
-
 import com.project.monster_api.model.BaseMonster;
 import com.project.monster_api.model.Monster;
 import com.project.monster_api.model.Skill;
@@ -23,7 +22,6 @@ public class MonsterService {
     @Autowired
     private MonsterRepository monsterRepository;
 
-    // Injection du repository pour BaseMonster
     @Autowired
     private BaseMonsterRepository baseMonsterRepository;
 
@@ -44,10 +42,10 @@ public class MonsterService {
                 baseMonster.setElementalType(getElementalType(i));
 
                 // Définir des statistiques d'exemple
-                baseMonster.setBaseHp(100 + i * 10);
-                baseMonster.setBaseAtk(20 + i * 2);
-                baseMonster.setBaseDef(10 + i);
-                baseMonster.setBaseVit(15 + i);
+                baseMonster.setHp(100 + i * 10);
+                baseMonster.setAtk(20 + i * 2);
+                baseMonster.setDef(10 + i);
+                baseMonster.setVit(15 + i);
 
                 // Créer une compétence d'exemple
                 Skill skill = new Skill();
@@ -59,7 +57,7 @@ public class MonsterService {
                 skill.setMaxLevel(5);
 
                 // Affecter la compétence au BaseMonster
-                baseMonster.setBaseSkills(Collections.singletonList(skill));
+                baseMonster.setSkills(Collections.singletonList(skill));
 
                 // Définir une probabilité d'invocation (ici 10% pour chaque)
                 baseMonster.setInvocationProbability(10.0);
@@ -70,6 +68,28 @@ public class MonsterService {
             }
         }
         return seeded;
+    }
+
+    /**
+     * Crée et initialise un nouveau monstre à partir des données fournies.
+     *
+     * @param username Nom du monstre invoqué.
+     * @param baseMonster Données du monstre à invoquer.
+     * @return Le monstre créé avec son identifiant généré et autres informations initialisées.
+     */
+    public Monster createMonster(String username, BaseMonster baseMonster) {
+        Monster createdMonster = new Monster();
+        createdMonster.setOwnerUsername(username);
+        createdMonster.setElementalType(baseMonster.getElementalType());
+        createdMonster.setHp(baseMonster.getHp());
+        createdMonster.setAtk(baseMonster.getAtk());
+        createdMonster.setDef(baseMonster.getDef());
+        createdMonster.setVit(baseMonster.getVit());
+        createdMonster.setLevel(1);
+        createdMonster.setXp(0);
+        createdMonster.setSkills(baseMonster.getSkills());
+
+        return createdMonster;
     }
 
     /**

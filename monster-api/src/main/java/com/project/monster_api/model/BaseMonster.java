@@ -18,10 +18,10 @@ public class BaseMonster {
     @Id
     private String id;
     private String elementalType;
-    private int baseHp;
-    private int baseAtk;
-    private int baseDef;
-    private int baseVit;
-    private List<Skill> baseSkills;
+    private int hp;
+    private int atk;
+    private int def;
+    private int vit;
+    private List<Skill> skills;
     private double invocationProbability;
 }
