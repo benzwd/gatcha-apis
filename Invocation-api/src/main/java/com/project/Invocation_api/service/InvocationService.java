@@ -50,7 +50,6 @@ public class InvocationService {
         Map<String, String> playerMonsterRequest = new HashMap<>();
         playerMonsterRequest.put("username", username);
         playerMonsterRequest.put("monsterId", monster.getId());
-
         restTemplate.postForObject("http://localhost:8082/player/monster", playerMonsterRequest, Void.class);
     }
 
