@@ -8,7 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
       </profile>
-      <profile name="Annotation profile for Invocation-api" enabled="true">
+      <profile name="Annotation profile for player-api" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -18,8 +18,8 @@
         <module name="monster-api" />
         <module name="auth-api" />
         <module name="player-api" />
-        <module name="Invocation-api" />
         <module name="combat-api" />
+        <module name="Invocation-api" />
       </profile>
     </annotationProcessing>
   </component>
