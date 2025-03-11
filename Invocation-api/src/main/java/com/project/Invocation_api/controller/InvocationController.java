@@ -19,12 +19,12 @@ public class InvocationController {
     /**
      * Effectue une invocation pour le joueur authentifié.
      *
-     * @param username récupéré via le token.
+     * @param token récupéré via le token.
      * @return monstre invoqué.
      */
     @PostMapping
-    public ResponseEntity<MonsterDTO> invokeMonster(@RequestAttribute("username") String username) {
-        MonsterDTO monster = invocationService.invokeMonster(username);
+    public ResponseEntity<MonsterDTO> invokeMonster(@RequestAttribute("username") String token) {
+        MonsterDTO monster = invocationService.invokeMonster(token);
         return ResponseEntity.ok(monster);
     }
 }

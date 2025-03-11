@@ -41,16 +41,16 @@ public class InvocationService {
     }
 
     public MonsterDTO invokeAndSaveMonster(MonsterDTO monsterDTO) {
-        String url = "http://localhost:8080/monsters/save";
+        String url = "http://localhost:8082/monsters/save";
         MonsterDTO savedMonster = restTemplate.postForObject(url, monsterDTO, MonsterDTO.class);
         return savedMonster;
     }
 
     public void addMonsterToPlayer(String username, MonsterDTO monster) {
         Map<String, String> playerMonsterRequest = new HashMap<>();
-        playerMonsterRequest.put("username", username);
+        playerMonsterRequest.put("token", username);
         playerMonsterRequest.put("monsterId", monster.getId());
-        restTemplate.postForObject("http://localhost:8082/player/monster", playerMonsterRequest, Void.class);
+        restTemplate.postForObject("http://localhost:8081/player/monster", playerMonsterRequest, Void.class);
     }
 
     /**

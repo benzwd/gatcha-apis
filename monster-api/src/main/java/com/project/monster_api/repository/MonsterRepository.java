@@ -6,9 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * Repository pour l'entité Monster.
- */
 @Repository
 public interface MonsterRepository extends MongoRepository<Monster, String> {
     List<Monster> findByOwnerUsername(String ownerUsername);

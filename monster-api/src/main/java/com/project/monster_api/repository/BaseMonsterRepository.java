@@ -6,9 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * Repository pour les BaseMonster.
- */
 @Repository
 public interface BaseMonsterRepository extends MongoRepository<BaseMonster, String> {
     List<BaseMonster> findAll();

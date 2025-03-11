@@ -70,6 +70,10 @@ public class MonsterService {
         return seeded;
     }
 
+    public List<BaseMonster> getAllBaseMonsters() {
+        return baseMonsterRepository.findAll();
+    }
+
     /**
      * Crée et initialise un nouveau monstre à partir des données fournies.
      *

@@ -51,6 +51,12 @@ public class MonsterController {
         return ResponseEntity.ok(savedMonster);
     }
 
+    @GetMapping("/base")
+    public ResponseEntity<List<BaseMonster>> getAllBaseMonsters() {
+        List<BaseMonster> baseMonsters = monsterService.getAllBaseMonsters();
+        return ResponseEntity.ok(baseMonsters);
+    }
+
     /**
      * Endpoint pour créer un nouveau monstre.
      *
