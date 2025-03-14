@@ -52,7 +52,7 @@ public class MonsterController {
     }
 
     @GetMapping("/base")
-    public ResponseEntity<List<BaseMonster>> getAllBaseMonsters() {
+    public ResponseEntity<List<BaseMonster>> getAllBaseMonsters(@RequestAttribute("username") String username) {
         List<BaseMonster> baseMonsters = monsterService.getAllBaseMonsters();
         return ResponseEntity.ok(baseMonsters);
     }

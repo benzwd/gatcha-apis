@@ -5,6 +5,10 @@ import com.project.Invocation_api.dto.MonsterDTO;
 import com.project.Invocation_api.model.InvocationRecord;
 import com.project.Invocation_api.repository.InvocationRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,11 +27,13 @@ public class InvocationService {
 
     private Random random = new Random();
 
-    public MonsterDTO invokeMonster(String username) {
-        BaseMonsterDTO baseMonster = selectBaseMonster();
-        MonsterDTO monster = prepareMonsterDTO(baseMonster, username);
+    public MonsterDTO invokeMonster(String username, String token) {
+        System.out.println("USERNAME INVOKE: " + username); // Log les en-têtes
 
-        MonsterDTO savedMonster = invokeAndSaveMonster(monster);
+        BaseMonsterDTO baseMonster = selectBaseMonster(token);
+        MonsterDTO monster = prepareMonsterDTO(baseMonster, token);
+
+        MonsterDTO savedMonster = invokeAndSaveMonster(monster, token);
         addMonsterToPlayer(username, savedMonster);
 
         // Enregistrement de l'invocation dans la base tampon
@@ -40,17 +46,50 @@ public class InvocationService {
         return savedMonster;
     }
 
-    public MonsterDTO invokeAndSaveMonster(MonsterDTO monsterDTO) {
-        String url = "http://localhost:8082/monsters/save";
-        MonsterDTO savedMonster = restTemplate.postForObject(url, monsterDTO, MonsterDTO.class);
-        return savedMonster;
+    public MonsterDTO invokeAndSaveMonster(MonsterDTO monsterDTO, String token) {
+        String url = "http://monster-api:8082/monsters/save";
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", token);
+        HttpEntity<MonsterDTO> entity = new HttpEntity<>(monsterDTO, headers);
+
+        try {
+            ResponseEntity<MonsterDTO> response = restTemplate.exchange(
+                    url, HttpMethod.POST, entity, MonsterDTO.class);
+
+            if (response.getStatusCode().is2xxSuccessful()) {
+                return response.getBody();
+            } else {
+                throw new RuntimeException("Échec de la requête : " + response.getStatusCode());
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // Log l'exception pour le débogage
+            throw new RuntimeException("Erreur lors de la sauvegarde du monstre", e);
+        }
     }
 
-    public void addMonsterToPlayer(String username, MonsterDTO monster) {
+    public void addMonsterToPlayer(String token, MonsterDTO monster) {
+        String url = "http://player-api:8081/player/monster?monsterId=" + monster.getId();
         Map<String, String> playerMonsterRequest = new HashMap<>();
-        playerMonsterRequest.put("token", username);
+        playerMonsterRequest.put("token", token);
         playerMonsterRequest.put("monsterId", monster.getId());
-        restTemplate.postForObject("http://localhost:8081/player/monster", playerMonsterRequest, Void.class);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", token);
+        HttpEntity<Map<String, String>> entity = new HttpEntity<>(playerMonsterRequest, headers);
+        System.out.println("MonsterID: " + monster.getId()); // Log les en-têtes
+
+
+        try {
+            ResponseEntity<Void> response = restTemplate.exchange(
+                    url, HttpMethod.POST, entity, Void.class);
+
+            if (!response.getStatusCode().is2xxSuccessful()) {
+                throw new RuntimeException("Échec de la requête : " + response.getStatusCode());
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // Log l'exception pour le débogage
+            throw new RuntimeException("Erreur lors de l'ajout du monstre au joueur", e);
+        }
     }
 
     /**
@@ -58,13 +97,30 @@ public class InvocationService {
      *
      * @return un BaseMonsterDTO sélectionné.
      */
-    private BaseMonsterDTO selectBaseMonster() {
-        String url = "http://localhost:8082/monsters/base";
-        BaseMonsterDTO[] baseMonsters = restTemplate.getForObject(url, BaseMonsterDTO[].class);
-        if (baseMonsters == null || baseMonsters.length == 0) {
-            throw new RuntimeException("Aucun BaseMonster disponible");
+    private BaseMonsterDTO selectBaseMonster(String token) {
+        String url = "http://monster-api:8082/monsters/base";
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", token); // Utilisez le token ici
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        System.out.println("En-têtes de la requête : " + headers); // Log les en-têtes
+
+        try {
+            ResponseEntity<BaseMonsterDTO[]> response = restTemplate.exchange(
+                    url, HttpMethod.GET, entity, BaseMonsterDTO[].class);
+
+            if (response.getStatusCode().is2xxSuccessful()) {
+                BaseMonsterDTO[] baseMonsters = response.getBody();
+                if (baseMonsters == null || baseMonsters.length == 0) {
+                    throw new RuntimeException("Aucun BaseMonster disponible");
+                }
+                return baseMonsters[random.nextInt(baseMonsters.length)];
+            } else {
+                throw new RuntimeException("Échec de la requête : " + response.getStatusCode());
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // Log l'exception pour le débogage
+            throw new RuntimeException("Erreur lors de la récupération des BaseMonsters", e);
         }
-        return baseMonsters[random.nextInt(baseMonsters.length)];
     }
 
     /**
@@ -75,6 +131,8 @@ public class InvocationService {
      * @return Le MonsterDTO préparé.
      */
     private MonsterDTO prepareMonsterDTO(BaseMonsterDTO baseMonster, String username) {
+        System.out.println("USERNAME PREPARE: " + username); // Log les en-têtes
+
         MonsterDTO monsterDTO = new MonsterDTO();
         monsterDTO.setOwnerUsername(username);
         monsterDTO.setElementalType(baseMonster.getElementalType());

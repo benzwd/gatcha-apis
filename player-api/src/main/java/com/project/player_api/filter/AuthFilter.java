@@ -34,6 +34,7 @@ public class AuthFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
 
         } catch (Exception e) {
+            e.printStackTrace();
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Échec de l'authentification.");
         }
     }
