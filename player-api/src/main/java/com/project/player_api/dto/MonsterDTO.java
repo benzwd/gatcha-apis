@@ -1,22 +1,19 @@
-package com.project.monster_api.model;
+package com.project.player_api.dto;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
+
+import java.util.List;
 
 /**
  * Représente un monstre.
  */
 @Getter
 @Setter
-@Document(collection = "monsters")
-public class Monster {
+public class MonsterDTO {
     @Id
     private String id;
-    @Setter
     private String ownerUsername;
     private String elementalType;
     private int level;
@@ -25,5 +22,6 @@ public class Monster {
     private int def;
     private int vit;
     private double xp;
-    private List<Skill> skills;
+    private List<SkillDTO> skills;
 }
+

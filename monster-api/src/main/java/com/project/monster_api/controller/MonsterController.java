@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * API REST pour la gestion des monstres.
@@ -44,10 +45,9 @@ public class MonsterController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Monster> saveMonster(@RequestBody Monster monster) {
-        // Appel du service pour enregistrer le monstre
+    public ResponseEntity<Monster> saveMonster(@RequestAttribute("username") String username, @RequestBody Monster monster) {
+        monster.setOwnerUsername(username);
         Monster savedMonster = monsterService.saveMonster(monster);
-        // Retourne le monstre enregistré avec un statut 200 OK (ou 201 Created)
         return ResponseEntity.ok(savedMonster);
     }
 
@@ -69,4 +69,15 @@ public class MonsterController {
         return ResponseEntity.ok(createdMonster);
     }
 
+    /**
+     * Récupère un monstre de base à partir de son identifiant.
+     *
+     * @param baseMonsterId L'identifiant du monstre de base à récupérer.
+     * @return Le monstre de base correspondant ou un statut 404 si non trouvé.
+     */
+    @GetMapping("/monster-base/{baseMonsterId}")
+    public ResponseEntity<Optional<BaseMonster>> getBaseMonsterById(@PathVariable String baseMonsterId) {
+        Optional<BaseMonster> baseMonster = monsterService.getBaseMonsterById(baseMonsterId);
+        return ResponseEntity.ok(baseMonster);
+    }
 }

@@ -1,9 +1,15 @@
 package com.project.player_api.service;
 
+import com.project.player_api.dto.BaseMonsterDTO;
+import com.project.player_api.dto.MonsterDTO;
 import com.project.player_api.model.Player;
 import com.project.player_api.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * Service qui gère le profil des joueurs.
@@ -72,6 +78,7 @@ public class PlayerService {
      * @return profil mis à jour.
      */
     public Player addMonster(String username, String monsterId) {
+        saveMonster(username, getBaseMonster(monsterId));
         Player player = getProfile(username);
         player.getMonsterIds().add(monsterId);
         return playerRepository.save(player);
@@ -103,5 +110,30 @@ public class PlayerService {
         player.setExperience(0);
         player.setExperienceThreshold(50); // seuil de départ
         return playerRepository.save(player);
+    }
+
+    public BaseMonsterDTO getBaseMonster(String id){
+        String url = "http://localhost:8082/monsters/monster-base/" + id;
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<BaseMonsterDTO> response = restTemplate.getForEntity(url, BaseMonsterDTO.class);
+        BaseMonsterDTO baseMonster = response.getBody();
+        return baseMonster;
+    }
+
+    /**
+     * Appelle l'API Monster pour sauvegarder un monstre via l'endpoint "/save".
+     *
+     * @param username le nom d'utilisateur.
+     * @param monster l'objet Monster à sauvegarder.
+     * @return le Monster sauvegardé retourné par l'API Monster.
+     */
+    public MonsterDTO saveMonster(String username, BaseMonsterDTO monster) {
+        String url = "http://localhost:8082/monsters/save";
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("username", username);
+        HttpEntity<BaseMonsterDTO> requestEntity = new HttpEntity<>(monster, headers);
+        ResponseEntity<MonsterDTO> response = restTemplate.postForEntity(url, requestEntity, MonsterDTO.class);
+        return response.getBody();
     }
 }
