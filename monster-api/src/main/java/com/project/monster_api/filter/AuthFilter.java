@@ -31,11 +31,9 @@ public class AuthFilter extends OncePerRequestFilter {
             }
 
             request.setAttribute("username", username);
-            request.setAttribute("token", token);
             filterChain.doFilter(request, response);
 
         } catch (Exception e) {
-            e.printStackTrace();
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Échec de l'authentification.");
         }
     }
