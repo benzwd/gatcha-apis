@@ -23,8 +23,9 @@ public class InvocationController {
      * @return monstre invoqué.
      */
     @PostMapping
-    public ResponseEntity<MonsterDTO> invokeMonster(@RequestAttribute("username") String token) {
-        MonsterDTO monster = invocationService.invokeMonster(token);
+    public ResponseEntity<MonsterDTO> invokeMonster( @RequestAttribute("username") String username,
+                                                     @RequestAttribute("token") String token) {
+        MonsterDTO monster = invocationService.invokeMonster(username, token);
         return ResponseEntity.ok(monster);
     }
 }

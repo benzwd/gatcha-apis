@@ -47,8 +47,10 @@ public class AuthFilter extends OncePerRequestFilter {
 
         try {
             String username = authService.validateToken(token);
-            // Passage du nom d'utilisateur aux contrôleurs via l'attribut de requête.
             request.setAttribute("username", username);
+            System.out.println("Username extrait : " + username);
+
+            request.setAttribute("token", token);
             filterChain.doFilter(request, response);
         } catch (UnauthorizedException ex) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
