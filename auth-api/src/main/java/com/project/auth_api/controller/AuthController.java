@@ -48,21 +48,4 @@ public class AuthController {
         User user = authService.createUser(username, password);
         return ResponseEntity.ok(user);
     }
-
-    /**
-     * Extrait le nom d'utilisateur à partir d'un token passé dans le header Authorization.
-     *
-     * @param token token fourni dans le header Authorization.
-     * @return nom d'utilisateur associé.
-     * @throws UnauthorizedException si le token n'existe pas ou est expiré.
-     */
-    @PostMapping("/username-from-token")
-    public ResponseEntity<String> getUsernameFromToken(@RequestHeader("Authorization") String token) {
-
-        if (token != null && token.startsWith("Bearer ")) {
-            token = token.substring(7);
-        }
-            String username = authService.getUsernameFromToken(token);
-            return ResponseEntity.ok(username);
-    }
 }

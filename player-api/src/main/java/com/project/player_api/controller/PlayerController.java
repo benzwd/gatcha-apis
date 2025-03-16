@@ -1,6 +1,5 @@
 package com.project.player_api.controller;
 
-import com.project.player_api.dto.BaseMonsterDTO;
 import com.project.player_api.model.Player;
 import com.project.player_api.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +61,6 @@ public class PlayerController {
     @PostMapping("/monster")
     public ResponseEntity<Player> addMonster(@RequestAttribute("username") String username,
                                              @RequestParam String monsterId) {
-        BaseMonsterDTO monster = playerService.getBaseMonster(monsterId);
         return ResponseEntity.ok(playerService.addMonster(username, monsterId));
     }
 

@@ -75,18 +75,6 @@ public class AuthService {
     }
 
     /**
-     * Extrait le nom d'utilisateur à partir d'un token sans mettre à jour son expiration.
-     *
-     * @param tokenStr token fourni.
-     * @return nom d'utilisateur associé.
-     * @throws UnauthorizedException si le token n'existe pas ou est expiré.
-     */
-    public String getUsernameFromToken(String tokenStr) {
-        Token token = tokenRepository.findByToken(tokenStr);
-        return token.getUsername();
-    }
-
-    /**
      * Génère un token sous la forme username-YYYY/MM/DD-HH:mm:ss.
      *
      * @param username nom d'utilisateur.

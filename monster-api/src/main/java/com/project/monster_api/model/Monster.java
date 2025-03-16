@@ -16,7 +16,6 @@ import lombok.Setter;
 public class Monster {
     @Id
     private String id;
-    @Setter
     private String ownerUsername;
     private String elementalType;
     private int level;

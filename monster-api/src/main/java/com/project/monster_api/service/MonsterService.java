@@ -154,14 +154,4 @@ public class MonsterService {
     public Monster saveMonster(Monster monster) {
         return monsterRepository.save(monster);
     }
-
-    /**
-     * Récupère un BaseMonster par son identifiant.
-     *
-     * @param baseMonsterId L'identifiant du monstre de base.
-     * @return Le BaseMonster correspondant ou null si non trouvé.
-     */
-    public Optional<BaseMonster> getBaseMonsterById(String baseMonsterId) {
-        return baseMonsterRepository.findById(baseMonsterId);
-    }
 }
