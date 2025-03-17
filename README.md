@@ -57,3 +57,14 @@ Une fois les conteneurs démarrés, consultez les logs dans le terminal. Chaque 
 Pour arrêter et supprimer le conteneur, exécutez :
 
 docker-compose down
+
+# Frontend
+Concernant la partie front end, nous avons décidé d'utiliser react, malheuresement avec les soucis de cors policy il est impossible de lancer le front en même temps que le docker
+
+Voici les étapes pour lancer le front simplement : 
+
+    cd fronend
+    npm install
+    npm run dev
+
+### Projet réalisé par Benjamin ZAWODA, Matys LEPRETRE, Walid SAKOUKNI et Salsabil AMRI
