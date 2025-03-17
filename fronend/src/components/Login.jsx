@@ -31,7 +31,7 @@ const Login = () => {
                     {error && <p className="text-red-500 text-center">{error}</p>}
                     <div>
                         <label htmlFor="username" className="block text-sm font-medium text-gray-800">
-                            Nom d'utilisateur
+                            Nom d'utilisateuree
                         </label>
                         <input
                             type="text"

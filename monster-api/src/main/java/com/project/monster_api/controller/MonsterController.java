@@ -14,6 +14,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/monsters")
+@CrossOrigin(origins = "http://localhost:5173")
 public class MonsterController {
 
     @Autowired

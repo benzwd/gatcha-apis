@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/invocation")
+@CrossOrigin(origins = "http://localhost:5173")
 public class InvocationController {
 
     @Autowired

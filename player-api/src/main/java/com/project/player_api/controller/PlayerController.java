@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/player")
+@CrossOrigin(origins = "http://frontend", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS})
 public class PlayerController {
 
     @Autowired
@@ -22,7 +23,7 @@ public class PlayerController {
      * @param username récupéré via le filtre d'authentification.
      * @return profil du joueur.
      */
-    @GetMapping("/profile")
+    @RequestMapping(value = "/profile", method = {RequestMethod.GET, RequestMethod.OPTIONS})
     public ResponseEntity<Player> getProfile(@RequestAttribute("username") String username) {
         return ResponseEntity.ok(playerService.getProfile(username));
     }
